@@ -6,13 +6,15 @@ export class EmailActivities {
   async sendWelcomeEmail(to: string): Promise<any> {
     // Implementation
     console.log(`Sending welcome email to ${to}`);
-    return await fetch('https://jsonplaceholder.typicode.com/posts');
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    return res.json();
   }
 
   @ActivityMethod('sendPromoEmail')
   async sendPromotion(to: string, promoCode: string): Promise<any> {
     // Implementation
     console.log(`Sending promo ${promoCode} to ${to}`);
-    return await fetch('https://jsonplaceholder.typicode.com/posts');
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    return res.json();
   }
 }

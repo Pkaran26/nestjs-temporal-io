@@ -5,9 +5,9 @@ import { TemporalService } from 'nestjs-temporal-core';
 export class AppService {
   constructor(private readonly temporalService: TemporalService) {}
 
-  async sendWelcomeEmail(email: string): Promise<string> {
+  async sendWelcomeEmail(email: string): Promise<any> {
     // Use the simplified API to start a workflow
-    const { workflowId } = await this.temporalService.startWorkflow(
+    const response = await this.temporalService.startWorkflow(
       'sendWelcomeWorkflow',
       [email],
       'my-task-queue',
@@ -15,13 +15,18 @@ export class AppService {
         workflowId: `welcome-${email}-${Date.now()}`,
       },
     );
+    const data = await response.result;
+    return {
+      data: data,
+      workflowId: response.workflowId,
+    };
 
-    return workflowId;
+    // return response.firstExecutionRunId;
   }
 
-  async sendPromoEmail(email: string, promoCode: string): Promise<string> {
+  async sendPromoEmail(email: string, promoCode: string): Promise<any> {
     // Use the client service directly for more options
-    const { workflowId } = await this.temporalService
+    const response = await this.temporalService
       .getClient()
       .startWorkflow('sendPromoWorkflow', [email, promoCode], {
         taskQueue: 'my-task-queue',
@@ -31,6 +36,10 @@ export class AppService {
         },
       });
 
-    return workflowId;
+    const data = await response.result;
+    return {
+      data: data,
+      workflowId: response.workflowId,
+    };
   }
 }
