@@ -10,7 +10,7 @@ export class AppService {
     const response = await this.temporalService.startWorkflow(
       'sendWelcomeWorkflow',
       [email],
-      'my-task-queue',
+      'main-queue', //'my-task-queue',
       {
         workflowId: `welcome-${email}-${Date.now()}`,
       },
@@ -29,7 +29,7 @@ export class AppService {
     const response = await this.temporalService
       .getClient()
       .startWorkflow('sendPromoWorkflow', [email, promoCode], {
-        taskQueue: 'my-task-queue',
+        taskQueue: 'main-queue', //'my-task-queue',
         workflowId: `promo-${email}-${Date.now()}`,
         retry: {
           maximumAttempts: 3,
@@ -47,7 +47,7 @@ export class AppService {
     const handle = await this.temporalService
       .getClient()
       .startWorkflow('sendEmailSequenceWorkflow', [email, promoCode], {
-        taskQueue: 'my-task-queue',
+        taskQueue: 'main-queue', //'my-task-queue',
         workflowId: `both-${email}-${Date.now()}`,
       });
 
@@ -59,7 +59,7 @@ export class AppService {
     const handle = await this.temporalService
       .getClient()
       .startWorkflow('getProductsWorkflow', [], {
-        taskQueue: 'shop-queue',
+        taskQueue: 'main-queue', //'shop-queue',
         workflowId: `products-${Date.now()}`,
       });
 
@@ -71,7 +71,7 @@ export class AppService {
     const handle = await this.temporalService
       .getClient()
       .startWorkflow('getCartWorkflow', [], {
-        taskQueue: 'shop-queue',
+        taskQueue: 'main-queue', //'shop-queue',
         workflowId: `cart-${Date.now()}`,
       });
 
@@ -83,7 +83,7 @@ export class AppService {
     const handle = await this.temporalService
       .getClient()
       .startWorkflow('getPostsWorkflow', [], {
-        taskQueue: 'blog-queue',
+        taskQueue: 'main-queue', //'blog-queue',
         workflowId: `posts-${Date.now()}`,
       });
 
@@ -95,7 +95,7 @@ export class AppService {
     const handle = await this.temporalService
       .getClient()
       .startWorkflow('getQuotesWorkflow', [], {
-        taskQueue: 'blog-queue',
+        taskQueue: 'main-queue', //'blog-queue',
         workflowId: `quotes-${Date.now()}`,
       });
 
