@@ -42,4 +42,16 @@ export class AppService {
       workflowId: response.workflowId,
     };
   }
+
+  async sendBothEmails(email: string, promoCode: string): Promise<any> {
+    const handle = await this.temporalService
+      .getClient()
+      .startWorkflow('sendEmailSequenceWorkflow', [email, promoCode], {
+        taskQueue: 'my-task-queue',
+        workflowId: `both-${email}-${Date.now()}`,
+      });
+
+    const result = await handle.result; // returns { welcome, promo }
+    return result;
+  }
 }

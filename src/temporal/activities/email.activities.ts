@@ -14,7 +14,7 @@ export class EmailActivities {
   async sendPromotion(to: string, promoCode: string): Promise<any> {
     // Implementation
     console.log(`Sending promo ${promoCode} to ${to}`);
-    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
     return res.json();
   }
 }
