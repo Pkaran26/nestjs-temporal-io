@@ -54,4 +54,52 @@ export class AppService {
     const result = await handle.result; // returns { welcome, promo }
     return result;
   }
+
+  async getProducts(): Promise<any> {
+    const handle = await this.temporalService
+      .getClient()
+      .startWorkflow('getProductsWorkflow', [], {
+        taskQueue: 'shop-queue',
+        workflowId: `products-${Date.now()}`,
+      });
+
+    const result = await handle.result;
+    return result;
+  }
+
+  async getCart(): Promise<any> {
+    const handle = await this.temporalService
+      .getClient()
+      .startWorkflow('getCartWorkflow', [], {
+        taskQueue: 'shop-queue',
+        workflowId: `cart-${Date.now()}`,
+      });
+
+    const result = await handle.result;
+    return result;
+  }
+
+  async getPosts(): Promise<any> {
+    const handle = await this.temporalService
+      .getClient()
+      .startWorkflow('getPostsWorkflow', [], {
+        taskQueue: 'blog-queue',
+        workflowId: `posts-${Date.now()}`,
+      });
+
+    const result = await handle.result;
+    return result;
+  }
+
+  async getQuotes(): Promise<any> {
+    const handle = await this.temporalService
+      .getClient()
+      .startWorkflow('getQuotesWorkflow', [], {
+        taskQueue: 'blog-queue',
+        workflowId: `quotes-${Date.now()}`,
+      });
+
+    const result = await handle.result;
+    return result;
+  }
 }
